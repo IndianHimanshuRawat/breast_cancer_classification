@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OncoSense · Breast tissue analysis</title>
+<meta name="description" content="Enter cell-nucleus measurements from a fine needle aspirate and get an instant machine-learning classification.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">
+    <svg width="42" height="40" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2c3 4 7 6 7 11a7 7 0 0 1-14 0c0-5 4-7 7-11z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="14" r="2.6" fill="currentColor"/></svg>
+    OncoSense
+  </a>
+  <a class="top-link" href="#analyze">Start analysis</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Read the cells.<br>Get a second opinion in seconds.</h1>
+      <p class="lead">Enter 14 measurements from a fine needle aspirate and our trained model classifies the sample as benign or malignant.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#analyze">Analyze a sample</a>
+        <button class="btn ghost" type="button" data-sample="benign">Try an example</button>
+      </div>
+      <ul class="facts">
+        <li><b>14</b> nuclear features</li>
+        <li><b>&lt;1s</b> to a result</li>
+        <li><b>0</b> data stored</li>
+      </ul>
+    </div>
+    <div class="scope" aria-hidden="true">
+      <canvas id="cells" width="560" height="560"></canvas>
+      <span class="scope-tag">Stained smear · 400×</span>
+    </div>
+  </section>
+
+  <section class="workbench" id="analyze">
+    <form id="form" novalidate>
+      <div class="form-head">
+        <h2>Sample measurements</h2>
+        <div class="fillers">
+          <button type="button" class="chip" data-sample="benign">Fill benign example</button>
+          <button type="button" class="chip" data-sample="malignant">Fill malignant example</button>
+          <button type="button" class="chip quiet" id="clear">Clear</button>
+        </div>
+      </div>
+      <div id="groups"></div>
+      <button class="btn primary wide" id="submit" type="submit"><span class="label">Run analysis</span><span class="spin" hidden></span></button>
+    </form>
+
+    <aside class="result" id="result" aria-live="polite">
+      <div class="idle" id="idle">
+        <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="track"/></svg></div>
+        <h3>Result appears here</h3>
+        <p>Complete all 14 fields, then run the analysis.</p>
+      </div>
+      <div class="out" id="out" hidden>
+        <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="track"/><circle cx="60" cy="60" r="52" class="arc" id="arc"/></svg>
+          <div class="pct"><b id="pct">0</b><small>% malignant<br>probability</small></div></div>
+        <span class="badge" id="badge"></span>
+        <h3 id="verdict"></h3>
+        <p id="detail"></p>
+        <div class="scale" aria-hidden="true"><div class="seg"></div><i id="needle"></i><div class="ticks"><span>Very low</span><span>Uncertain</span><span>Very high</span></div></div>
+        <dl class="bars">
+          <div><dt>Benign</dt><dd><span class="bar ok" id="bBen"></span><b id="vBen"></b></dd></div>
+          <div><dt>Malignant</dt><dd><span class="bar bad" id="bMal"></span><b id="vMal"></b></dd></div>
+        </dl>
+        <button class="btn ghost small" type="button" id="print">Save as PDF / print</button>
+      </div>
+      <p class="note">This tool is for education and research. It is not a medical device and cannot replace a clinician’s diagnosis. Talk to a doctor about any health concern.</p>
+    </aside>
+  </section>
+  <section class="report" id="report" hidden>
+    <div class="report-head"><h2>Detailed report</h2><p id="stamp"></p></div>
+    <div class="cards">
+      <article class="card wide2"><h3>What drove this result</h3><p class="sub">Bars to the right raise the malignant probability; bars to the left lower it.</p><div id="factors"></div></article>
+      <article class="card"><h3>Suggested next steps</h3><ol id="steps"></ol></article>
+      <article class="card"><h3>Questions for your doctor</h3><ul id="questions"></ul></article>
+      <article class="card"><h3>Recent analyses</h3><ul id="history" class="hist"></ul></article>
+      <article class="card"><h3>About this model</h3><p class="sub" id="model-info"></p><p class="sub">A probability is the model’s estimate, not a certainty. Values far outside typical ranges can make the estimate unreliable. Only a biopsy reviewed by a pathologist can confirm a diagnosis.</p></article>
+    </div>
+  </section>
+</main>
+
+<footer>OncoSense is a demonstration of a machine-learning model trained on the Wisconsin Diagnostic Breast Cancer dataset.</footer>
+<script src="script.js"></script>
+</body>
+</html>
