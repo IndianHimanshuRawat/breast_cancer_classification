@@ -1,5 +1,5 @@
 // ---- Config: point this at your FastAPI server ----
-const API_URL = "http://127.0.0.1:8000/predict";
+const API_URL = "https://breast-cancer-classification-xpep.onrender.com";
 
 // [key, label, typical min, typical max]. Keys must match the API exactly (note the space in "concave points_se").
 const GROUPS = [
