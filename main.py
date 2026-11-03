@@ -44,11 +44,13 @@ def risk_level(p: float) -> str:
     if p < 0.90: return "high"
     return "very_high"
 
+@app.get("/")
+def home():
+    return {"message": "Breast Cancer Classification API"}
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
 
 @app.post("/predict")
 def predict(data: InputData):
